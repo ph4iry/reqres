@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  /* Custom fonts */
+  --font-bricolage: "Bricolage Grotesque", sans-serif;
+  --font-caveat: "Caveat", cursive;
+  
+  /* Override default font stacks */
+  --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
