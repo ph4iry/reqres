@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
 import { startApiServer } from './api/server';
+import { dbManager } from './database';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -23,9 +24,14 @@ const createWindow = (): void => {
   }
 };
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  dbManager.connect();
+
   createWindow();
-  startApiServer();
+  
+  if (dbManager) {
+    startApiServer();
+  }
   
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -34,4 +40,8 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
+});
+
+app.on('before-quit', () => {
+  dbManager.close();
 });

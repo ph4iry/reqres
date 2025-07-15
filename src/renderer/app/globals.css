@@ -3,10 +3,11 @@
 @theme {
   /* Custom fonts */
   --font-bricolage: "Bricolage Grotesque", sans-serif;
-  --font-caveat: "Caveat", cursive;
+  --font-firacode: "Fira Code", monospace;
   
   /* Override default font stacks */
   --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 body {

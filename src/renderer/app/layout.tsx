@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Fira_Code } from "next/font/google";
 import "./globals.css";
+import Sidebar from "../components/Sidebar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const firacode = Fira_Code({
+  variable: "--font-firacode",
   subsets: ["latin"],
 });
 
@@ -25,9 +26,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${bricolage.variable} ${firacode.variable} antialiased h-screen overflow-hidden`}
       >
-        {children}
+        <div className="flex">
+          <Sidebar />
+          <div className="overflow-y-scroll grow">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
