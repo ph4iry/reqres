@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import { Plus } from "lucide-react";
 
@@ -13,10 +15,10 @@ export default function Home() {
         priority
       />
       <div className="text-8xl font-bold">reqres.</div>
-      <button className="py-3 px-6 bg-black text-xl text-white mt-5 rounded-full flex items-center gap-2">
+      <a href="/projects" className="py-3 px-6 bg-black text-xl text-white mt-5 rounded-full flex items-center gap-2">
         <span><Plus className="size-6" /></span>
         <span>Create a new API</span>
-      </button>
+      </a>
     </main>
   );
 }

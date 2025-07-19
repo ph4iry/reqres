@@ -14,11 +14,13 @@ const createWindow = (): void => {
       nodeIntegration: false,
       contextIsolation: true,
     },
+    vibrancy: 'fullscreen-ui',    // on MacOS
+    backgroundMaterial: 'acrylic' // on Windows 11
   });
 
   if (isDev) {
     mainWindow.loadURL('http://localhost:3000');
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadFile(path.join(__dirname, '../src/renderer/out/index.html'));
   }
@@ -28,7 +30,7 @@ app.whenReady().then(async () => {
   dbManager.connect();
 
   createWindow();
-  
+
   if (dbManager) {
     startApiServer();
   }

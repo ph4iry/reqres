@@ -18,7 +18,7 @@ export interface Endpoint {
   tags?: string; // json string array
   operationId: string;
   requestBody?: string; // json string
-  responses: string; // json string
+  responses?: string; // json string
   parameters?: string; // json string
   documentation?: string; // markdown content
   deprecated?: boolean;

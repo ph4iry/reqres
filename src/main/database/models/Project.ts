@@ -51,6 +51,8 @@ export class ProjectModel {
   }
 
   findAll(): Project[] {
+    console.log('finding all projects')
+    console.log('result', this.findAllStmt.all());
     return this.findAllStmt.all() as Project[];
   }
 

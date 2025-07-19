@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'export',
@@ -10,10 +10,16 @@ const nextConfig: NextConfig = {
   assetPrefix: process.env.NODE_ENV === 'production' ? './' : '',
   webpack: (config, { isServer }) => {
     if (!isServer) {
-      config.target = 'electron-renderer';
+      // Remove electron-renderer target - this might be causing issues
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        process: false,
+      };
     }
     return config;
   }
 };
 
-export default nextConfig;
+module.exports = nextConfig;

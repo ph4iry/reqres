@@ -6,6 +6,7 @@ const projectService = new ProjectService();
 export const GET = async (req: Request, res: Response) => {
   try {
     const projects = await projectService.getAllProjects();
+    res.json({ projects });
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error' });
   }
@@ -14,6 +15,7 @@ export const GET = async (req: Request, res: Response) => {
 export const POST = async (req: Request, res: Response) => {
   try {
     const project = await projectService.createProject(req.body);
+    res.json({ project });
   } catch (error) {
     return res.status(400).json({ error: error || 'Bad request' });
   }

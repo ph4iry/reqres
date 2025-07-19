@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "dist/main/main.js",
   "scripts": {
-    "dev": "concurrently \"yarn dev:next\" \"yarn dev:electron\"",
+    "dev": "concurrently --names \"RENDERER,MAIN\" --prefix-colors \"blue,green\" \"yarn dev:next\" \"yarn dev:electron\"",
     "dev:next": "cd src/renderer && yarn dev",
-    "dev:electron": "webpack --config build/webpack.main.config.js --mode development && cross-env NODE_ENV=development electron .",
+    "dev:electron": "webpack --config build/webpack.main.config.js --mode development && cross-env NODE_ENV=development electron . --watch",
     "build": "yarn build:next && yarn build:main",
     "build:next": "cd src/renderer && yarn build",
     "build:main": "webpack --config build/webpack.main.config.js --mode production",

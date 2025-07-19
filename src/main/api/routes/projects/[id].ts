@@ -12,7 +12,8 @@ export const GET = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Project not found' });
     }
 
-    res.json({ project });
+    console.log('Project with stats:', project);
+    return res.json({ project });
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error' });
   }
@@ -23,7 +24,8 @@ export const PUT = async (req: Request, res: Response) => {
     const { id } = req.params;
     const project = await projectService.updateProject(id, req.body);
 
-    res.json({ project });
+    console.log('Updating project:', project);
+    return res.json({ project });
   } catch (error) {
     return res.status(400).json({ error });
   }

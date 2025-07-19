@@ -1,5 +1,6 @@
 import { ProjectModel } from '../../database/models/Project';
 import { Project } from '../../database/schema';
+import { dbManager } from '@main/database';
 
 export class ProjectService {
   private projectModel = new ProjectModel();
@@ -22,7 +23,9 @@ export class ProjectService {
   }
 
   async getAllProjects(): Promise<Project[]> {
-    return this.projectModel.findAll();
+    const result = this.projectModel.findAll();
+    console.log('from project service:', result);
+    return result;
   }
 
   async updateProject(id: string, data: Partial<Project>): Promise<Project | null> {

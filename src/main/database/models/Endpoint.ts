@@ -78,6 +78,17 @@ export class EndpointModel {
     }));
   }
 
+  findByMethodAndPath(projectId: string, method: string, path: string): Endpoint | null {
+    const row = this.db.prepare('SELECT * FROM endpoints WHERE projectId = ? AND method = ? AND path = ?').get(projectId, method, path) as any;
+
+    if (!row) return null;
+
+    return {
+      ...row,
+      deprecated: Boolean(row.deprecated)
+    }
+  }
+
   update(id: string, data: Partial<Omit<Endpoint, 'id' | 'createdAt' | 'updatedAt'>>): Endpoint | null {
     const existing = this.findById(id);
     if (!existing) return null;
