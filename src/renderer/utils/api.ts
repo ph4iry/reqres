@@ -60,6 +60,12 @@ export class ApiClient {
       body: JSON.stringify({ projectId, path }),
     });
   }
+
+  async getEndpoints(projectId: string) {
+    return this.request<{ endpoints: Endpoint[] }>(`/projects/${projectId}/endpoints`, {
+      method: 'GET',
+    });
+  }
 }
 
 export const apiClient = new ApiClient();

@@ -7,7 +7,7 @@ interface ResponsePanelProps {
   onRunEndpoint: () => void;
 }
 
-export function ResponsePanel({ project, endpoint, onRunEndpoint }: ResponsePanelProps) {
+export default function ResponsePanel({ project, endpoint, onRunEndpoint }: ResponsePanelProps) {
   return (
     <div className="bg-white/60 backdrop-blur-xl rounded-2xl border border-gray-200/50 overflow-hidden">
       <div className="flex items-center justify-between p-4 border-b border-gray-200/50">

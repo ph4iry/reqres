@@ -41,7 +41,7 @@ export default function EndpointAddButton({ children, handler }: EndpointAddButt
       />
       <button 
         onClick={handleTransformation} 
-        className={`${stage === 'name' ? 'basis-6' : ''} shrink flex items-center justify-center gap-2 w-full px-3 h-12 text-left text-sm text-white/50 hover:text-white rounded-xl border border-gray-200/20 hover:border-gray-200/50 transition-all duration-200`}
+        className={`${stage === 'name' ? 'basis-6' : ''} shrink flex items-center justify-center gap-2 w-full px-3 h-12 text-left text-sm text-white/50 hover:text-white rounded-xl transition-all duration-200 border border-dashed border-white/20 bg-white/5 hover:bg-white/10`}
       >
         <Plus size={16} />
         {stage === 'create' && children}
