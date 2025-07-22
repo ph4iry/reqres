@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { apiClient } from "../../utils/api";
+import { apiClient } from "@/utils/api";
 
 export default function CreateProject() {
   const router = useRouter();

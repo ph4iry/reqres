@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Plus, Send, Trash2 } from "lucide-react";
-import { Project } from "../../../../../main/database/schema"; // Adjust import path as needed
+import { Endpoint, Project } from "@main/database/schema"; // Adjust import path as needed
 
 interface QueryParam {
   id: string;
@@ -12,12 +12,18 @@ interface QueryParam {
 
 interface ParamsProps {
   project: Project;
-  endpointPath?: string;
-  onSendRequest?: (url: string, params: QueryParam[]) => void;
+  endpoint: Endpoint;
+  responseState: [{ status: number, data: string } | null, (response: { status: number, data: string } | null) => void];
 }
 
-export default function Params({ project, endpointPath = '', onSendRequest }: ParamsProps) {
+export default function Params({ project, endpoint, responseState }: ParamsProps) {
   const [queryParams, setQueryParams] = useState<QueryParam[]>([]);
+  const [response, setResponse] = responseState;
+  const [duration, setDuration] = useState<number | null>(null);
+  const [error, setError] = useState<{
+    status: number;
+    message: string;
+  } | null>(null);
 
   const addQueryParam = () => {
     const newParam: QueryParam = {
@@ -54,16 +60,78 @@ export default function Params({ project, endpointPath = '', onSendRequest }: Pa
   const getFullUrl = () => {
     const baseUrl = project.baseUrl || 'https://api.example.com';
     const queryString = buildQueryString();
-    return `${baseUrl}${endpointPath}${queryString}`;
+    return `${baseUrl}${endpoint.path}${queryString}`;
   };
+
+  const determineErrorFormat: (message: string) => 'html' | 'json' | 'text' = (message) => {
+    // if (!message) return 'text';
+    try {
+      JSON.parse(message);
+      return 'json';
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      if (/<[a-z][\s\S]*>/i.test(message)) {
+        return 'html';
+      }
+      return 'text';
+    }
+  }
 
   const handleSendRequest = () => {
     const fullUrl = getFullUrl();
-    onSendRequest?.(fullUrl, queryParams.filter(p => p.enabled));
+    // start timer
+    const startTime = Date.now();
+    fetch(fullUrl, {
+      method: endpoint.method, // Adjust method as needed
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(async (response) => {
+      // stop timer
+      const endTime = Date.now();
+      setDuration(endTime - startTime);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        const errorFormat = determineErrorFormat(errorText);
+
+        if (errorFormat === 'json') {
+          try {
+            const jsonData = JSON.parse(errorText);
+            setError({
+              status: response.status,
+              message: JSON.stringify(jsonData, null, 2)
+            });
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          } catch (e) {
+            setError({
+              status: response.status,
+              message: 'Invalid JSON response'
+            });
+          }
+        } else if (errorFormat === 'html') {
+          setError({
+            status: response.status,
+            message: `<div class="text-red-500">${errorText}</div>`
+          });
+        }
+        // setError({
+        //   status: response.status,
+        //   message: errorText || 'An error occurred while fetching the response.'
+        // });
+        setResponse(null);
+        return;
+      }
+      setResponse({
+        status: response.status,
+        data: JSON.stringify(await response.json(), null, 2)
+      });
+    });
+    // onSendRequest?.(fullUrl, queryParams.filter(p => p.enabled));
   };
 
   return (
-    <div className="w-full p-4 space-y-4">
+    <div className="w-full p-4 space-y-4 relative">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-white/60 font-medium">Query Params</div>
@@ -161,19 +229,62 @@ export default function Params({ project, endpointPath = '', onSendRequest }: Pa
         <div className="text-xs text-white/40 font-medium">Preview</div>
         <div className="flex items-center gap-2">
           <div className="flex-1 bg-white/5 border border-white/10 rounded-lg p-2 min-h-[32px] flex items-center">
-            <code className="text-xs font-mono text-white/70 break-all leading-relaxed">
+            <code className="text-sm font-mono text-white/70 break-all">
               {getFullUrl()}
             </code>
           </div>
           <button
             onClick={handleSendRequest}
-            className="flex items-center gap-1.5 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all duration-200 text-xs font-medium shrink-0"
+            className="flex items-center gap-1.5 px-3 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-lg transition-all duration-200 text-sm font-medium shrink-0"
           >
-            <Send size={12} />
+            <Send size={14} />
             Send
           </button>
         </div>
       </div>
+
+      <div className="">
+        <div className="text-sm text-white/40 font-medium">Response</div>
+        <div className="flex items-center gap-2 text-sm text-white/50 mt-3">
+          {(response || error) && (
+            // status code
+            <div className="">
+              {response ? (
+                <span className="bg-green-500/30 px-2 py-1 rounded">{response?.status}</span>
+              ) : (
+                <span className="bg-red-500/30 px-2 py-1 rounded">{error?.status}</span>
+              )}
+            </div>
+          )}
+          <span className="text-white/30">&middot;</span>
+          {duration !== null && (
+            <div className="bg-white/5 px-2 py-1 rounded">
+              {duration} ms
+            </div>
+          )}
+        </div>
+        <div className="mt-2 p-3 bg-white/5 border border-white/10 rounded-lg text-sm text-white/70">
+          {response ? (
+            <pre className="whitespace-pre-wrap break-words">{response.data}</pre>
+          ) : (
+            error && <ErrorMessage format={determineErrorFormat(error.message)} message={error.message} />
+          )}
+        </div>
+      </div>
     </div>
   );
+}
+
+function ErrorMessage({ format, message }: { format: 'html' | 'json' | 'text', message: string }) {
+  return (
+    <div>
+      {format === 'html' ? (
+        <div dangerouslySetInnerHTML={{ __html: message }} />
+      ) : format === 'json' ? (
+        <pre>{JSON.stringify(JSON.parse(message), null, 2)}</pre>
+      ) : (
+        <pre>{message}</pre>
+      )}
+    </div>
+  )
 }

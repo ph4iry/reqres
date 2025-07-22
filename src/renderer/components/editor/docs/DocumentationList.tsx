@@ -1,5 +1,5 @@
 import { Plus, FileText } from "lucide-react";
-import { Documentation } from "../../../../main/database/schema";
+import { Documentation } from "@main/database/schema";
 
 interface DocumentationListProps {
   documentationPages: Documentation[];

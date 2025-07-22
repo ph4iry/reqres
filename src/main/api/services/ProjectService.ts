@@ -1,6 +1,6 @@
 import { ProjectModel } from '../../database/models/Project';
 import { Project } from '../../database/schema';
-import { dbManager } from '@main/database';
+// import { dbManager } from '@main/database';
 
 export class ProjectService {
   private projectModel = new ProjectModel();

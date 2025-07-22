@@ -16,6 +16,8 @@
     "paths": {
       "@main/*": ["main/*"],
       "@renderer/*": ["renderer/*"],
+      "@components/*": ["renderer/components/*"],
+      "@/*": ["renderer/*"],
       "@shared/*": ["shared/*"]
     }
   },

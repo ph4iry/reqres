@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { apiClient } from '../../utils/api';
-import { Project } from '../../../main/database/schema';
+import { apiClient } from '@/utils/api';
+import { Project } from '@main/database/schema';
 import { Plus, FileText, Edit, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import EndpointEditor from '../../components/editor/Editor';
+import EndpointEditor from '@components/editor/Editor';
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);

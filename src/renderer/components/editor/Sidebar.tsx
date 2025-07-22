@@ -1,7 +1,7 @@
 import TabNavigation from "./Tabs";
 import EndpointsList from "./endpoints/EndpointsList";
 import DocumentationList from "./docs/DocumentationList";
-import { Endpoint, Documentation } from "../../../main/database/schema";
+import { Endpoint, Documentation } from "@main/database/schema";
 
 interface SidebarProps {
   activeTab: string;

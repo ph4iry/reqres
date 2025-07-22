@@ -8,11 +8,10 @@ type ToggleButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 type RegularButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon?: ComponentType<{ size?: number, className?: string }>
-  toggle?: never;
+  toggle: false;
 }
 
 export default function Button(props: RegularButtonProps | ToggleButtonProps) {
-  
   return (
     <button
       {...props}

@@ -1,5 +1,5 @@
 const API_BASE_URL = 'http://localhost:3001/api';
-import { Endpoint, Project } from '../../main/database/schema';
+import { Endpoint, Project } from '@main/database/schema';
 
 export class ApiClient {
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {

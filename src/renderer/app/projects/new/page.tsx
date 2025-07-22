@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import CreateProject from "../../../components/forms/CreateProject";
+import CreateProject from "@components/forms/CreateProject";
 
 export default function NewProjectPage() {
 

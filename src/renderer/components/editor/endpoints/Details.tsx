@@ -1,6 +1,6 @@
 'use client';
 import RequestBadge from "./RequestBadge";
-import { Project, Endpoint } from "../../../../main/database/schema";
+import { Project, Endpoint } from "@main/database/schema";
 import RequestTabs from "./RequestTabs";
 import { useState } from "react";
 import Params from "./tabs/Params";
@@ -28,8 +28,9 @@ export default function EndpointDetails({
   // onStatusCodeChange,
   // onRunEndpoint
 }: EndpointDetailsProps) {
-  const [activeTab, setActiveTab] = useState<'params' | 'body' | 'tests' | 'settings'>('params');
-  
+  const [activeTab, setActiveTab] = useState<'params' | 'body' | 'tests' | 'docs' | 'settings'>('params');
+  const responseState = useState<{ status: number, data: string } | null>(null);
+
   return (
     <div className="max-w-6xl mx-auto">
       {/* Header */}
@@ -62,7 +63,7 @@ export default function EndpointDetails({
 
       <RequestTabs {...{ activeTab, setActiveTab }} />
 
-      {activeTab === 'params' && ( <Params project={project} endpointPath={endpoint.path} /> )}
+      {activeTab === 'params' && ( <Params project={project} endpoint={endpoint} responseState={responseState} /> )}
 
       {/* Two Column Layout */}
       {/* <div className="grid grid-cols-2 gap-6">

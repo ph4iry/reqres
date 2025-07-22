@@ -1,4 +1,4 @@
-import { Endpoint } from "../../../../main/database/schema";
+import { Endpoint } from "@main/database/schema";
 
 interface DocumentationPanelProps {
   endpoint: Endpoint;

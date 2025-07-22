@@ -1,5 +1,5 @@
 import { Play } from "lucide-react";
-import { Project, Endpoint } from "../../../../main/database/schema";
+import { Project, Endpoint } from "@main/database/schema";
 
 interface ResponsePanelProps {
   project: Project;

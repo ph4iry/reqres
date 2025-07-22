@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { Endpoint } from "../../../../main/database/schema";
+import { Endpoint } from "@main/database/schema";
 import RequestBadge from "./RequestBadge";
 import EndpointAddButton from "./EndpointAddButton";
 
@@ -42,7 +42,7 @@ export default function EndpointsList({
         <div key={folder} className="backdrop-blur-sm rounded-xl p-3 border border-gray-200/20">
           <button
             onClick={() => onToggleFolder(folder)}
-            className="flex items-center gap-2 w-full p-2 text-left text-sm font-medium text-white hover:bg-white/60 rounded-lg transition-all duration-200"
+            className="flex items-center gap-2 w-full p-2 text-left text-sm font-medium text-white hover:bg-white/10 rounded-lg transition-all duration-200"
           >
             {expandedFolders.includes(folder) ? 
               <ChevronDown size={16} /> : 

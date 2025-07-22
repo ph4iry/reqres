@@ -1,7 +1,7 @@
 import { FileText } from "lucide-react";
-import { Project, Endpoint, Documentation } from "../../../main/database/schema";
+import { Project, Endpoint, Documentation } from "@main/database/schema";
 import { useState, useEffect } from "react";
-import { apiClient } from "../../utils/api";
+import { apiClient } from "@/utils/api";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import EndpointDetails from "./endpoints/Details";

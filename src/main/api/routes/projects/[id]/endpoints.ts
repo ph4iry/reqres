@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { ProjectService } from "../../../services/ProjectService";
-import { EndpointService } from "../../../services/EndpointService";
+import { ProjectService } from "../../../../api/services/ProjectService";
+import { EndpointService } from "../../../../api/services/EndpointService";
 
 const endpointService = new EndpointService();
 const projectService = new ProjectService();

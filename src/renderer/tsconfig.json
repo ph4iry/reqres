@@ -26,11 +26,17 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
+        "./*"
       ],
-      "@shared/*": [
-        "../shared/*"
-      ]
+      "@main/*": [
+        "../main/*"
+      ],
+      "@components/*": [
+        "./components/*"
+      ],
+      // "@shared/*": [
+      //   "../shared/*"
+      // ]
     }
   },
   "include": [

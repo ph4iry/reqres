@@ -1,4 +1,4 @@
-import { Endpoint, Project } from "../../../../main/database/schema";
+import { Endpoint, Project } from "@main/database/schema";
 
 interface RequestExampleProps {
   endpoint: Endpoint;

@@ -1,6 +1,5 @@
 import { EndpointModel } from '../../database/models/Endpoint';
 import { Endpoint } from '../../database/schema';
-import { dbManager } from '@main/database';
 
 export class EndpointService {
   private endpointModel = new EndpointModel();
